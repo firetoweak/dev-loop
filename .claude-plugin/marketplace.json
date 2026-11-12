@@ -1,0 +1,7 @@
+{
+  "name": "dev-loop",
+  "owner": { "name": "fireweakliu" },
+  "plugins": [
+    { "name": "dev-loop", "source": "./", "description": "Development loop skill pack" }
+  ]
+}

@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
-# Link every skill in this pack into one or more agent tools' skill folders.
-# Edits always happen here; the tools see them through the links.
+# Install this pack into agent tools. Edits always happen in this folder.
+#
+# - Tools with a plugin system get the pack as ONE plugin (Codex today), so its skills are grouped
+#   and do not crowd the tool's loose skill list. Re-run after editing to refresh the tool's copy.
+# - Other tools get each skill linked into their skills folder; edits show up through the links.
 #
 # Usage:
-#   ./install.sh                 # link into every known tool folder whose tool is installed
-#   ./install.sh <dir> [<dir>…]  # link into the given skills folders
+#   ./install.sh                 # every detected tool
+#   ./install.sh <dir> [<dir>…]  # link into the given skills folders only
 #   ./install.sh --copy …        # copy instead of link (for tools that do not follow links)
-#   ./install.sh --uninstall …   # remove links/copies this pack created
+#   ./install.sh --uninstall …   # remove links/copies this pack created (plugins: use the tool's own remove)
 set -euo pipefail
 
 PACK="$(cd "$(dirname "$0")" && pwd)"
@@ -16,9 +19,25 @@ case "${1:-}" in
   --uninstall) MODE=uninstall; shift ;;
 esac
 
-# Known user-level skill folders: <tool home>:<skills folder>
-KNOWN=(
-  "$HOME/.codex:$HOME/.codex/skills"
+is_windows() { case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) return 0 ;; *) return 1 ;; esac; }
+native_path() { if is_windows; then cygpath -w "$1"; else printf '%s' "$1"; fi; }
+
+# Codex: install as a plugin from this folder's local marketplace (.agents/plugins/marketplace.json).
+codex_bin() {
+  command -v codex 2>/dev/null && return
+  for c in "$HOME/.codex/plugins/.plugin-appserver/codex.exe" "$HOME/.codex/plugins/.plugin-appserver/codex"; do
+    [ -x "$c" ] && { printf '%s' "$c"; return; }
+  done
+}
+install_codex_plugin() {
+  local bin; bin="$(codex_bin)"
+  [ -n "$bin" ] || { echo "SKIP     Codex found but its CLI is not; add $(native_path "$PACK") as a marketplace manually" >&2; return; }
+  "$bin" plugin marketplace add "$(native_path "$PACK")" >/dev/null 2>&1 || true   # already added is fine
+  "$bin" plugin add dev-loop@dev-loop >/dev/null && echo "plugin   codex: dev-loop@dev-loop (refreshed)"
+}
+
+# Tools without a plugin system for skills: <tool home>:<skills folder>
+LINKED=(
   "$HOME/.claude:$HOME/.claude/skills"
   "$HOME/.cursor:$HOME/.cursor/skills"
   "$HOME/.agents:$HOME/.agents/skills"
@@ -28,14 +47,13 @@ targets=()
 if [ $# -gt 0 ]; then
   targets=("$@")
 else
-  for entry in "${KNOWN[@]}"; do
+  if [ "$MODE" != uninstall ] && [ -d "$HOME/.codex" ]; then install_codex_plugin; fi
+  for entry in "${LINKED[@]}"; do
     home="${entry%%:*}"; dir="${entry#*:}"
     [ -d "$home" ] && targets+=("$dir")
   done
 fi
-[ ${#targets[@]} -gt 0 ] || { echo "No tool folders found; pass a skills folder explicitly." >&2; exit 1; }
-
-is_windows() { case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) return 0 ;; *) return 1 ;; esac; }
+[ ${#targets[@]} -gt 0 ] || exit 0
 
 link_dir() { # $1 source, $2 destination
   if is_windows; then
