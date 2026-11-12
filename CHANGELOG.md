@@ -8,4 +8,4 @@
 | 2026-11-12 | v3 | 加入 9 月写作系统案例与架构侧检查 |
 | 2026-11-12 | v4 | 手册重构为开发地图；新增 `spec-gate`、`runtime-judge`、`change-discipline`、`delivery-gate`、`retro-to-rules`，全部去项目化并按规模分级；`spec-gate` 按一次试跑的反馈修订 |
 | 2026-11-12 | v5 | 打包为与工具无关的 dev-loop 技能包：新增入口 skill `dev-loop`、安装脚本、README；地图移入包内为 MAP.md |
-| 2026-11-12 | v5.1 | Codex 改为以插件方式安装（`dev-loop@dev-loop`），不再在技能列表里散落 7 项；补充 Claude Code 插件清单；`install.sh` 自动选择插件或链接
+| 2026-11-12 | v5.1 | Codex 改为以插件方式安装（`dev-loop@dev-loop`），不再在技能列表里散落 7 项；补充 Claude Code 插件清单；`install.sh` 自动选择插件或链接 |
