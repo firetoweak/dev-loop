@@ -9,3 +9,4 @@
 | 2026-11-12 | v4 | 手册重构为开发地图；新增 `spec-gate`、`runtime-judge`、`change-discipline`、`delivery-gate`、`retro-to-rules`，全部去项目化并按规模分级；`spec-gate` 按一次试跑的反馈修订 |
 | 2026-11-12 | v5 | 打包为与工具无关的 dev-loop 技能包：新增入口 skill `dev-loop`、安装脚本、README；地图移入包内为 MAP.md |
 | 2026-11-12 | v5.1 | Codex 改为以插件方式安装（`dev-loop@dev-loop`），不再在技能列表里散落 7 项；补充 Claude Code 插件清单；`install.sh` 自动选择插件或链接 |
+| 2026-11-13 | v5.2 | 删除 `retro-to-rules` 及自动复盘流程；变更纪律改为按实际影响验证、按复发或根因疑点排查，移除修改计数和回退触发的机械停工；同步技能入口、地图、插件清单与旧技能安装清理。 |
