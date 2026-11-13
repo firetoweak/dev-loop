@@ -49,8 +49,8 @@ if [ $# -gt 0 ]; then
 else
   if [ "$MODE" != uninstall ] && [ -d "$HOME/.codex" ]; then install_codex_plugin; fi
   for entry in "${LINKED[@]}"; do
-    home="${entry%%:*}"; dir="${entry#*:}"
-    [ -d "$home" ] && targets+=("$dir")
+    tool_home="${entry%%:*}"; dir="${entry#*:}"
+    [ -d "$tool_home" ] && targets+=("$dir")
   done
 fi
 [ ${#targets[@]} -gt 0 ] || exit 0
@@ -77,8 +77,40 @@ remove_ours() {
   fi
 }
 
+is_retired_ours() { # retro-to-rules may now be a dangling link or junction
+  local expected="$PACK/skills/retro-to-rules"
+  if is_windows; then
+    command -v powershell.exe >/dev/null 2>&1 || return 1
+    DEV_LOOP_RETIRED_DEST="$(native_path "$1")" DEV_LOOP_RETIRED_SOURCE="$(native_path "$expected")" \
+      powershell.exe -NoProfile -NonInteractive -Command '
+        try {
+          $item = Get-Item -LiteralPath $env:DEV_LOOP_RETIRED_DEST -Force -ErrorAction Stop
+          if ($item.Attributes -band [IO.FileAttributes]::ReparsePoint) {
+            if ($item.LinkType -ne "Junction") { exit 1 }
+            $target = [IO.Path]::GetFullPath([string](@($item.Target)[0])).TrimEnd([char]92)
+            $expected = [IO.Path]::GetFullPath($env:DEV_LOOP_RETIRED_SOURCE).TrimEnd([char]92)
+            if ($target -eq $expected) { exit 0 }
+          } elseif ($item.PSIsContainer -and (Test-Path -LiteralPath (Join-Path $item.FullName ".dev-loop-copy") -PathType Leaf)) {
+            exit 0
+          }
+        } catch {}
+        exit 1
+      ' 2>/dev/null
+  elif [ -L "$1" ]; then
+    [ "$(readlink "$1")" = "$expected" ]
+  else
+    [ -d "$1" ] && [ -f "$1/.dev-loop-copy" ]
+  fi
+}
+
 for dir in "${targets[@]}"; do
   mkdir -p "$dir"
+  retired_dest="$dir/retro-to-rules"
+  if is_retired_ours "$retired_dest"; then
+    remove_ours "$retired_dest"; echo "removed  $retired_dest (retired skill)"
+  elif [ -e "$retired_dest" ] || [ -L "$retired_dest" ]; then
+    echo "SKIP     $retired_dest is not a verified link or copy from this pack" >&2
+  fi
   for src in "$PACK"/skills/*/; do
     name="$(basename "$src")"; dest="$dir/$name"
     if [ "$MODE" = uninstall ]; then

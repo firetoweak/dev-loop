@@ -74,7 +74,7 @@ Classify each item before changing anything:
 
 | Class | Action |
 | --- | --- |
-| Implementation defect | Fix with `change-discipline`; add a regression check; ask why self-verification missed it and add an invariant or scenario step if it would have caught it |
+| Implementation defect | Fix with `change-discipline`; run the relevant regression checks and add a focused check when existing coverage is insufficient |
 | Rule gap | Decide and record in the spec or decision record, then change |
 | Architecture issue | Update the constraint notes, assess impact with `runtime-judge` or `state-judge`, then fix |
 | General convention | Fix, and add to the written conventions so it applies to later work |

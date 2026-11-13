@@ -13,12 +13,11 @@
 | `skills/state-judge` | Agent | 幂等、一致、原子、数据访问成本（持久化） |
 | `skills/change-discipline` | Agent | 每次修 bug、改已有行为的纪律 |
 | `skills/delivery-gate` | Agent | 自验、交付说明、反馈分类、定稿点 |
-| `skills/retro-to-rules` | Agent | 复盘并把教训写成会被执行的规则 |
 | `install.sh` | — | 安装到各工具：有插件系统的装成一个插件，没有的链接到 skill 文件夹 |
 | `.codex-plugin/`、`.agents/plugins/` | — | Codex 插件清单和本地插件市场 |
 | `.claude-plugin/` | — | Claude Code 插件清单和本地插件市场 |
 
-每个 skill 开头都先判断规模（轻 / 标准 / 完整），小事小办。
+按改动范围和风险选择适用检查，小事小办。
 
 ## 安装
 
@@ -30,8 +29,8 @@
 
 | 工具 | 方式 | 效果 |
 |---|---|---|
-| Codex | 装成插件 `dev-loop@dev-loop`（本目录就是本地插件市场） | 在"插件"里只占一项，7 个 skill 归在插件下，不挤在技能列表里 |
-| Claude Code、Cursor、其他读 `~/.agents/skills` 的工具 | 把 7 个 skill 链接到用户级 skill 文件夹 | 直接可用 |
+| Codex | 装成插件 `dev-loop@dev-loop`（本目录就是本地插件市场） | 在"插件"里只占一项，6 个 skill 归在插件下，不挤在技能列表里 |
+| Claude Code、Cursor、其他读 `~/.agents/skills` 的工具 | 把 6 个 skill 链接到用户级 skill 文件夹 | 直接可用 |
 
 Windows 上用目录联接（junction），不需要管理员权限；macOS / Linux 用符号链接。
 
