@@ -1,6 +1,6 @@
 {
   "name": "dev-loop",
-  "version": "0.5.2",
+  "version": "0.5.4",
   "description": "Engineer + agent development loop: size the work, then apply one stage skill (spec, runtime, state, change, delivery).",
   "author": { "name": "fireweakliu" },
   "license": "MIT",

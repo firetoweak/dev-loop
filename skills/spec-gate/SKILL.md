@@ -34,7 +34,7 @@ One sentence: what does the requester want, and what does "done" mean?
 - An output for this piece of work, or a reusable method?
 - Who judges it, and how?
 
-If it is ambiguous between forms, ask before producing anything. If you cannot ask, write the question you would ask, proceed under the most reasonable reading, state that assumption at the top, and treat the ambiguity as a P0 question.
+If it is ambiguous between forms, ask before producing anything. Never jump into modifying repository files or opening branches/PRs when the requirement or deliverable is unsettled. If you cannot ask (for example, in a non-interactive read-only analysis), state the question and assumption at the top, keep outputs read-only, and treat the ambiguity as a P0 question.
 
 ## Step 1: Inventory what exists
 
@@ -68,6 +68,12 @@ Write artifacts so that non-builders who judge the result can read them.
 
 If the design will touch concurrency, long-running work, caches, timeouts, or persistence, note `runtime-judge` and `state-judge` as follow-ups for the design stage. They are not gate conditions.
 
+## Visual exploration and isolated POC
+
+- **Architecture over code**: During discussion, stay at the level of module boundaries, data/state ownership, visible behavior, and trade-offs. Do not dump code-level implementation plans before the direction is settled.
+- **Prefer a single-page HTML diagram**: When aligning on architecture, flows, or boundaries, render a concise single-page HTML architecture diagram with brief trade-off notes in a git-ignored scratch path (e.g. `.tools/drafts/<topic>.html`) and iterate on it as the user gives feedback.
+- **Isolated POC (only when requested for large or risky changes)**: Place standalone prototypes in a git-ignored scratch path (e.g. `.tools/poc/<topic>/`) or an isolated `poc/<topic>` worktree. Exempt POCs from `change-discipline`, `delivery-gate`, and CI gates so key assumptions can be proved or disproved fast. Never merge or open a PR from a POC directly.
+
 ## Step 3: Blocking questions
 
 Each material ambiguity becomes a row with a recommendation, so the reviewer chooses rather than designs.
@@ -97,9 +103,16 @@ Seed it with conventions already confirmed (Step 1.3), citing their source. A de
 
 ## Gate
 
-Light: pass when the deliverable is clear.
+Light: pass when the deliverable is clear and the user approves proceeding (trivial edits with an agreed target need no gate).
 
-Standard and Full: pass when the deliverable is confirmed, every P0 has a recorded decision, and the riskiest assumption is probed or explicitly accepted as a risk. For Full work, also: primary artifacts reviewed with the decider, and the repository's agent instruction file points to the spec and the decision log.
+Standard and Full: before entering implementation (`change-discipline`), compress the settled discussion and any POC findings into a one-screen **Handoff Brief** (kept in chat or an issue comment — do not create a separate PRD directory):
+
+1. **Goal and non-goals**
+2. **Settled decisions** (visible behavior, state ownership, old paths to remove)
+3. **POC lessons and rewrite list** (if a POC ran: what held/failed, and which shortcuts must be rewritten cleanly instead of copied)
+4. **Observable acceptance checks**
+
+Pass only when every P0 has a recorded decision, the riskiest assumption is probed or explicitly accepted, and the user explicitly clears the brief for implementation. For Full work, also: primary artifacts reviewed with the decider, and the repository's agent instruction file points to the spec and the decision log.
 
 ## Output format
 
