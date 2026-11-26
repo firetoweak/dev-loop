@@ -58,7 +58,7 @@ A temporary degradation can be the right emergency move. It then carries, in the
 
 ## Constraint document (Full level)
 
-When findings concern shared resources, record them in a constraint document in the repository so later changes, by people or agents, read them first:
+When findings concern shared resources, record them in the repository's constraint document if it keeps one (or in the task/PR summary if not) so later changes, by people or agents, read them first:
 
 | Category | Content |
 | --- | --- |

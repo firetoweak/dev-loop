@@ -8,7 +8,7 @@ description: >-
 ---
 # Dev loop
 
-A router, not a procedure. Decide where the work is and how big it is, then apply exactly the skill that fits. Do not run every skill on every task.
+A router, not a procedure. Decide where the work is and how big it is, then apply only the skill that fits the current stage (usually one; pair `runtime-judge` and `state-judge` when a design touches both execution and persistence). Do not run every skill on every task.
 
 ## 0. Mode boundary
 
@@ -33,7 +33,7 @@ Start light when unsure and expand only when the actual scope or risk calls for 
 | New request, new project, unclear requirement, or taking over unfinished work | `spec-gate` |
 | Changing how work executes: threads, processes, queues, workers, locks, caches, timeouts, long-running or slow calls, cancellation | `runtime-judge` |
 | Changing persistence, transactions, retries, or hot read/write paths | `state-judge` |
-| Fixing a defect or changing existing behavior | `change-discipline` |
+| Implementing a cleared brief, fixing a defect, or changing existing behavior | `change-discipline` |
 | About to hand work to a reviewer, QA, or requester; or feedback came back | `delivery-gate` |
 
 Loops back:
@@ -42,7 +42,7 @@ Loops back:
 
 ## 3. Use the project's local files
 
-Before applying a skill, read what the repository already records: its agent instruction file, spec, decision log, constraint notes, and conventions. Project-specific rules live there, never in these skills. If a Standard or Full task finds none, say so and propose the minimal set (see the pack's MAP.md, section 五).
+Before applying a skill, read what the repository already records: its agent instruction file, spec, decision log, constraint notes, and conventions. Project-specific rules live there, never in these skills. If a Standard or Full task finds none, say so and propose only the minimal repo files actually needed; do not invent unused template docs.
 
 ## Output
 
