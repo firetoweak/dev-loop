@@ -10,11 +10,7 @@ description: >-
 
 A router, not a procedure. Decide where the work is and how big it is, then apply only the skill that fits the current stage (usually one; pair `runtime-judge` and `state-judge` when a design touches both execution and persistence). Do not run every skill on every task.
 
-## 0. Mode boundary
-
-Stay read-only before the user explicitly authorizes implementation: do not create branches, edit repository files, or open PRs while discussing an idea, reviewing an issue, or shaping an unsettled requirement. Only trivial edits with an agreed target skip this gate.
-
-If implementation reveals that an agreed premise no longer holds, stop and realign instead of silently changing requirements or loosening acceptance criteria.
+When an idea or requirement is still unsettled, prefer staying in discussion until the direction is clear rather than rushing into edits or PRs. When diagnosing a bug or handling a clear fix, move forward directly to root cause and verification instead of stopping at surface symptoms.
 
 ## 1. Size the work
 

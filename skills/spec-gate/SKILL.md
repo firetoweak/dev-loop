@@ -34,7 +34,7 @@ One sentence: what does the requester want, and what does "done" mean?
 - An output for this piece of work, or a reusable method?
 - Who judges it, and how?
 
-If it is ambiguous between forms, ask before producing anything. Never jump into modifying repository files or opening branches/PRs when the requirement or deliverable is unsettled. If you cannot ask (for example, in a non-interactive read-only analysis), state the question and assumption at the top, keep outputs read-only, and treat the ambiguity as a P0 question.
+If the form or requirement is still unsettled, prefer clarifying first before editing code. If you cannot ask (for example, in a non-interactive read-only analysis), state the question and assumption at the top and treat the ambiguity as a P0 question.
 
 ## Step 1: Inventory what exists
 
@@ -68,11 +68,11 @@ Write artifacts so that non-builders who judge the result can read them.
 
 If the design will touch concurrency, long-running work, caches, timeouts, or persistence, note `runtime-judge` and `state-judge` as follow-ups for the design stage. They are not gate conditions.
 
-## Visual exploration and isolated POC
+## Visual exploration and isolated POC (optional)
 
-- **Architecture over code**: During discussion, stay at the level of module boundaries, data/state ownership, visible behavior, and trade-offs. Do not dump code-level implementation plans before the direction is settled.
-- **Prefer a single-page HTML diagram**: When aligning on architecture, flows, or boundaries, render a concise single-page HTML architecture diagram with brief trade-off notes in a git-ignored scratch path (e.g. `.tools/drafts/<topic>.html`) and iterate on it as the user gives feedback.
-- **Isolated POC (only when requested for large or risky changes)**: Place standalone prototypes in a git-ignored scratch path (e.g. `.tools/poc/<topic>/`) or an isolated `poc/<topic>` worktree. Exempt POCs from `change-discipline`, `delivery-gate`, and CI gates so key assumptions can be proved or disproved fast. Never merge or open a PR from a POC directly.
+- **Architecture over code**: During early discussion, prefer staying at module boundaries, state ownership, visible behavior, and trade-offs instead of dumping code-level plans.
+- **HTML diagram**: When aligning on architecture or flows, a single-page HTML diagram with brief notes in a scratch path (e.g. `.tools/drafts/<topic>.html`) is often easier to iterate on than long prose.
+- **Isolated POC**: For large or risky ideas, suggest a quick throwaway prototype in a scratch path (e.g. `.tools/poc/<topic>/`) or an isolated `poc/<topic>` worktree without heavy delivery checks, and note which shortcuts should be rewritten cleanly if moving to production.
 
 ## Step 3: Blocking questions
 
@@ -103,28 +103,21 @@ Seed it with conventions already confirmed (Step 1.3), citing their source. A de
 
 ## Gate
 
-Light: pass when the deliverable is clear and the user approves proceeding (trivial edits with an agreed target need no gate).
+Light: proceed once the deliverable is clear (trivial edits with an agreed target need no gate).
 
-Standard and Full: before entering implementation (`change-discipline`), compress the settled discussion and any POC findings into a one-screen **Handoff Brief** (kept in chat or an issue comment — do not create a separate PRD directory):
-
-1. **Goal and non-goals**
-2. **Settled decisions** (visible behavior, state ownership, old paths to remove)
-3. **POC lessons and rewrite list** (if a POC ran: what held/failed, and which shortcuts must be rewritten cleanly instead of copied)
-4. **Observable acceptance checks**
-
-Pass only when every P0 has a recorded decision, the riskiest assumption is probed or explicitly accepted, and the user explicitly clears the brief for implementation. For Full work, also: primary artifacts reviewed with the decider, and if the repository keeps spec or decision docs, its agent instruction file points to them.
+Standard and Full: before entering implementation (`change-discipline`), prefer summarizing the settled discussion and any POC findings into a short **Handoff Brief** (kept in chat or an issue comment rather than a separate PRD directory): goal and non-goals, key decisions, any POC shortcuts to rewrite, and observable acceptance checks. For Full work, review primary artifacts with the decider, and if the repository keeps spec or decision docs, keep its agent instruction file pointing to them.
 
 ## Output format
 
 Light: one or two lines.
 
-Standard and Full (while exploring / before clearance), about one screen, ordered by value:
+Standard and Full (while exploring), about one screen, ordered by value:
 
 1. Size level and deliverable (with any assumption made).
 2. Facts that change the work: the few findings that change its nature, scope, or base, with references.
 3. Other facts, brief; what was not covered.
 4. Primary type and artifacts (Full only, compact) and the HTML diagram path if one was rendered.
 5. Blocking questions, P0 first.
-6. Gate status, including any isolated POC to run.
+6. Suggested next step (including an isolated POC if risk is high).
 
-Once the discussion and any POC converge, output the one-screen **Handoff Brief** and wait for explicit clearance before implementing.
+Once the direction converges, suggest a short **Handoff Brief** so both sides align before implementation.
