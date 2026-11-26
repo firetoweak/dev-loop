@@ -39,17 +39,17 @@ Exercise the real thing the way its user does: the interface, command, API, or j
 - **Resources**: long runs or large batches do not grow memory, connections, or threads without bound.
 - **No regression**: the full regression suite passes, not only tests for this change.
 
-### Work-specific invariants
+### Work-specific checks
 
-Add the invariants identified for this work during `spec-gate` or design, stated as checkable facts.
+Verify the observable acceptance checks from the Handoff Brief (`spec-gate`) and any targeted checks identified during `runtime-judge` or `state-judge`, stated as checkable facts.
 
 ### End-to-end scenarios (Full)
 
 Run a few scenarios that go from creation through the end of the lifecycle and back to a restart. At each step: switch role where roles exist, reload, check invariants. Keep evidence (screenshots, transcripts, resulting state).
 
-### Conventions
+### Existing conventions (if any)
 
-Check changed parts against the project's or team's conventions, if any are written down.
+Check changed parts against the repository's written conventions if any exist. Do not invent a new conventions file during delivery.
 
 If a check fails, fix it with `change-discipline` before handing over, or list it in the note with a reason.
 
@@ -61,9 +61,9 @@ Standard and Full:
 
 ```
 Version and date
-1. Contents: items covered (tracking IDs or spec sections)
-2. Self-verification: scenarios run/passed; invariants checked (exceptions); conventions checked; evidence location
-3. Rules or constraints changed: decision-record entries and new conclusions
+1. Contents: items covered (tracking IDs, brief items, or spec sections)
+2. Self-verification: scenarios run/passed; invariants and work-specific checks (exceptions); evidence location
+3. Rules or constraints changed: updated decisions and new conclusions
 4. Open questions for the reviewer or decider, each with a recommendation
 5. Suggested focus for review
 ```
@@ -75,13 +75,12 @@ Classify each item before changing anything:
 | Class | Action |
 | --- | --- |
 | Implementation defect | Fix with `change-discipline`; run the relevant regression checks and add a focused check when existing coverage is insufficient |
-| Rule gap | Decide and record in the spec or decision record, then change |
-| Architecture issue | Update the constraint notes, assess impact with `runtime-judge` or `state-judge`, then fix |
-| General convention | Fix, and add to the written conventions so it applies to later work |
+| Rule gap | Decide first (`spec-gate`); update existing spec/decision docs if the repo keeps them, otherwise record in the task/PR, then change |
+| Architecture issue | Assess impact with `runtime-judge` or `state-judge`, update existing constraint notes if the repo keeps them, then fix |
 | Preference | Collect and handle in one batch |
 | New feature | Estimate and schedule later |
 
-If the reviewer keeps a tracking list, suggest columns for class, general convention (yes or no), decider, and regression check.
+If the reviewer keeps a tracking list, suggest columns for class, decider, and regression check.
 
 ## Step 5: Freeze point (Full)
 

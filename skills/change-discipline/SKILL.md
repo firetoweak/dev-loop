@@ -1,9 +1,9 @@
 ---
 name: change-discipline
 description: >-
-  Use when fixing a defect or changing existing behavior. Preserve agreed rules and working paths,
-  check the actual impact, and verify in proportion to risk. Search history only for recurring
-  symptoms or unclear causes. Keep clear local fixes lightweight.
+  Use when implementing a cleared brief, fixing a defect, or changing existing behavior. Preserve
+  agreed rules and working paths, check the actual impact, and verify in proportion to risk. Search
+  history only for recurring symptoms or unclear causes. Keep clear local fixes lightweight.
   Part of the dev-loop skill pack (entry: dev-loop).
 ---
 # Change discipline
@@ -12,7 +12,7 @@ Preserve agreed behavior and working paths. Apply the checks that can change the
 
 ## Before editing
 
-- **Establish the expected behavior.** Read the relevant agreed rules and constraints. Resolve a material rule gap or conflict before implementing it; record a changed business rule in the existing spec or decision record.
+- **Establish the expected behavior.** Read the relevant agreed rules, constraints, or cleared Handoff Brief. Resolve a material rule gap or conflict before implementing it; if a business rule changes, update the existing spec/decision record when the repository keeps one, otherwise note it in the task or PR.
 - **Check the actual impact.** When shared behavior is touched, identify the affected callers, views, roles, or clients. Keep the investigation local when the change is local.
 - **Investigate when needed.** For recurring symptoms or unclear causes, inspect relevant history and trace the current behavior. Reconsider the design when evidence shows it causes the problem.
 
