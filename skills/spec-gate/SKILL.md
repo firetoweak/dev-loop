@@ -94,7 +94,7 @@ Question families that often matter:
 
 ## Step 4: Decision log
 
-For Standard work, a few lines in the task or the spec is enough. For Full work, keep a table next to the spec:
+For Standard work, a few lines in the task, issue comment, or existing spec is enough. For Full work, keep a table next to the existing spec (or in the task/issue if the repository does not keep a separate spec doc):
 
 | Date | Question | Decision | Reason | Decider | Section affected |
 | --- | --- | --- | --- | --- | --- |
@@ -112,17 +112,19 @@ Standard and Full: before entering implementation (`change-discipline`), compres
 3. **POC lessons and rewrite list** (if a POC ran: what held/failed, and which shortcuts must be rewritten cleanly instead of copied)
 4. **Observable acceptance checks**
 
-Pass only when every P0 has a recorded decision, the riskiest assumption is probed or explicitly accepted, and the user explicitly clears the brief for implementation. For Full work, also: primary artifacts reviewed with the decider, and the repository's agent instruction file points to the spec and the decision log.
+Pass only when every P0 has a recorded decision, the riskiest assumption is probed or explicitly accepted, and the user explicitly clears the brief for implementation. For Full work, also: primary artifacts reviewed with the decider, and if the repository keeps spec or decision docs, its agent instruction file points to them.
 
 ## Output format
 
 Light: one or two lines.
 
-Standard and Full, about one screen, ordered by value:
+Standard and Full (while exploring / before clearance), about one screen, ordered by value:
 
 1. Size level and deliverable (with any assumption made).
 2. Facts that change the work: the few findings that change its nature, scope, or base, with references.
 3. Other facts, brief; what was not covered.
-4. Primary type and artifacts (Full only, compact).
+4. Primary type and artifacts (Full only, compact) and the HTML diagram path if one was rendered.
 5. Blocking questions, P0 first.
-6. Gate status, including any probe to run.
+6. Gate status, including any isolated POC to run.
+
+Once the discussion and any POC converge, output the one-screen **Handoff Brief** and wait for explicit clearance before implementing.
